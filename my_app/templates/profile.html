@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+        label {
+            display: block; /* Размещаем надписи на отдельных строках */
+            margin-bottom: 5px; /* Добавляем небольшой отступ между надписями и полями ввода */
+        }
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        a {
+            padding: 8px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome, {{ username }}!</h2>
+    <p>Email: {{ email }}</p>
+    <p>Pet Name: {{ pet_name }}</p>
+    <p>Number of calculations: {{ number_of_calculations }}</p>
+    <form method="post" action="{{ url_for('edit_profile') }}">
+        <label for="username">New Username:</label>
+        <input type="text" id="username" name="username" value="{{ username }}">
+        <label for="email">New Email:</label>
+        <input type="text" id="email" name="email" value="{{ email }}">
+        <label for="pet_name">New Pet Name:</label>
+        <input type="text" id="pet_name" name="pet_name" value="{{ pet_name }}">
+        <button type="submit">Save Changes</button>
+    </form>
+    <a href="{{ url_for('main') }}">Back to Main</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        a {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+        a:hover {
+            color: #45a049;
+        }
+        #results {
+            max-height: 200px; /* Устанавливаем максимальную высоту для контейнера с результатами */
+            overflow-y: auto; /* Включаем вертикальную прокрутку при необходимости */
+            padding: 5px; /* Добавляем небольшой отступ вокруг контейнера */
+        }
+        #results ul {
+            list-style: none; /* Убираем маркеры списка */
+            padding: 0; /* Убираем отступы */
+            margin: 0; /* Убираем отступы */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Data Upload</h1>
+    <form method="POST" enctype="multipart/form-data" action="/process_data" id="uploadForm">
+        <input type="file" name="file" accept=".csv" required>
+        <input type="submit" value="Process data" id="uploadButton">
+    </form>
+    <a href="/download_results">Download Results</a>
+    <a href="{{ url_for('main') }}">Back to Main</a>
+    <div id="results">
+        <ul id="resultsList"></ul> <!-- Используем список для отображения данных -->
+    </div>
+</div>
+<script>
+    document.getElementById("uploadForm").onsubmit = async function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        try {
+            const response = await fetch('/process_data', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            displayResults(result); // Вызываем функцию для отображения результатов
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    function displayResults(data) {
+        const resultsList = document.getElementById("resultsList");
+        resultsList.innerHTML = ""; // Очищаем список перед добавлением новых данных
+        // Перебираем данные и добавляем их в список
+        data.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = JSON.stringify(item);
+            resultsList.appendChild(li);
+        });
+    }
+</script>
+</body>
+</html>
