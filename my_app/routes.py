@@ -1,6 +1,7 @@
 import pickle
 import pandas as pd
 import json
+import os
 
 from flask import render_template, redirect, url_for, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
@@ -10,7 +11,7 @@ from my_app import app, db
 from my_app.models import User, UserResult
 from my_app.xgb_model import preprocess_data
 
-filename = "my_app/xgb_models/model.sav"
+filename = os.path.abspath("my_app/xgb_models/model.sav")
 model = pickle.load(open(filename, "rb"))
 
 
