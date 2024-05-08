@@ -20,8 +20,8 @@ file_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
 
 app = Flask(__name__)
-app.secret_key = 'some secret salting'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SECRET_KEY'] = 'some secret salting'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ilya:test@localhost/test_bd'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.app_context().push()
